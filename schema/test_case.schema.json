@@ -26,6 +26,8 @@
         "data_exfiltration",
         "malicious_tool_use",
         "multilingual_confusion",
+        "encoding_obfuscation",
+        "persona_roleplay",
         "benign_control"
       ]
     },
@@ -75,6 +77,11 @@
     "reviewed_by": {
       "type": "string",
       "description": "Native-speaker reviewer handle; required before merge per CONTRIBUTING.md"
+    },
+    "owasp_asi_ref": {
+      "type": "array",
+      "description": "Optional cross-reference to OWASP Top 10 for Agentic Applications 2026 (ASI01-ASI10). encoding_obfuscation and multilingual_confusion are techniques that serve an underlying ASI vector (usually ASI01) rather than distinct OWASP vectors themselves — see README's OWASP mapping section.",
+      "items": { "type": "string", "pattern": "^ASI(0[1-9]|10)$" }
     },
     "notes": {
       "type": "string"

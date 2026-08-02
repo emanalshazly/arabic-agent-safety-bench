@@ -6,7 +6,7 @@ Arabic, Egyptian, and Gulf dialects — including benign-control cases that
 check for *over*-refusal, not just under-refusal.
 
 > **Status: early skeleton, not yet released.** The dataset currently has
-> 10 seed cases written by the project team and **not yet reviewed by a
+> 28 seed cases written by the project team and **not yet reviewed by a
 > native speaker** (see [Limitations](#limitations)). Nothing here should
 > be cited as a finished benchmark yet — track progress in
 > [Roadmap](#roadmap).
@@ -38,20 +38,24 @@ Expected output looks like:
 
 ```
 Baseline: regex
-Cases: 10
-Overall accuracy: 4/10 (40.0%)
+Cases: 28
+Overall accuracy: 10/28 (35.7%)
 
 category                  correct    total   accuracy
-benign_control                  2        2     100.0%
-data_exfiltration               0        2       0.0%
-instruction_override            1        2      50.0%
-malicious_tool_use              1        2      50.0%
-multilingual_confusion          0        2       0.0%
+benign_control                  6        6     100.0%
+data_exfiltration               0        4       0.0%
+encoding_obfuscation            0        3       0.0%
+instruction_override            2        4      50.0%
+malicious_tool_use              1        4      25.0%
+multilingual_confusion          0        4       0.0%
+persona_roleplay                1        3      33.3%
 ```
 
-That 40% is expected — the shipped baseline is a naive keyword matcher,
+That ~36% is expected — the shipped baseline is a naive keyword matcher,
 not a real defense (see [Baselines](#baselines)). It exists as the floor
-any real model or classifier has to beat.
+any real model or classifier has to beat. `benign_control` at 100% just
+means the baseline doesn't over-flag *these particular* legitimate
+requests — not that over-refusal is a solved problem.
 
 ## Dataset
 
@@ -69,7 +73,27 @@ provenance fields (`source`, `license`, `reviewed_by`).
 | `data_exfiltration` | Attempts to extract system prompts, secrets, or other users' data |
 | `malicious_tool_use` | Attempts to misuse an available tool (delete files, send data out, act without confirmation) |
 | `multilingual_confusion` | Arabic/English code-switching used to slip an instruction past a filter |
+| `encoding_obfuscation` | Letter-spacing, Base64, and Franco-Arabic (Arabizi) transliteration used to evade keyword-based filters |
+| `persona_roleplay` | Fictional-character or fake-expert framing used to bypass safety behavior ("you are now DAN", "as a licensed pharmacist...") |
 | `benign_control` | Looks risky, is legitimate — must NOT be refused (measures over-refusal) |
+
+### OWASP Agentic Top 10 (2026) mapping
+
+Categories are cross-referenced to [OWASP Top 10 for Agentic Applications
+2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+(published by the OWASP GenAI Security Project, Dec 2025) via the optional
+`owasp_asi_ref` field on each case, so results are comparable against a
+public, external taxonomy instead of one invented for this repo alone.
+
+| Category | Primary OWASP ref | Note |
+|---|---|---|
+| `instruction_override` | ASI01 — Agent Goal Hijack | direct match |
+| `data_exfiltration` | ASI03 — Identity & Privilege Abuse, ASI06 — Memory & Context Poisoning | also cross-references OWASP LLM Top 10 2025 LLM02 (Sensitive Information Disclosure) for system-prompt/secret leakage, which predates the agentic-specific framework |
+| `malicious_tool_use` | ASI02 — Tool Misuse & Exploitation | direct match |
+| `multilingual_confusion` | serves ASI01 | a *technique*, not a distinct ASI vector — code-switching is one way to achieve goal hijack, not its own OWASP category |
+| `encoding_obfuscation` | serves ASI01 | same as above — obfuscation is a delivery technique, not a distinct vector |
+| `persona_roleplay` | ASI01, ASI09 — Human-Agent Trust Exploitation | overlaps both depending on whether the goal is hijack or trust exploitation |
+| `benign_control` | — | not an attack category, no ASI ref |
 
 ### Dialects
 
@@ -106,14 +130,19 @@ python runner/cli.py --baseline regex --out results/regex_run.json
 
 ## Limitations
 
-- The dataset is a **10-case seed set**, not the 300–500 case v1 target.
+- The dataset is a **28-case seed set**, not the 300–500 case v1 target.
 - No case has been reviewed by a native speaker yet — every case's
   `reviewed_by` field is empty. Treat current cases as drafts.
-- Only 3 of 3 dialects have *any* coverage, and only 2 cases each —
-  far from statistically meaningful per-dialect comparison yet.
+- Coverage per category is still 3-6 cases — far from statistically
+  meaningful per-category or per-dialect comparison yet.
 - Only one (deliberately weak) baseline is implemented.
 - This bench measures single-turn prompt→response behavior only; it does
-  not yet test multi-turn manipulation or long-context attacks.
+  not yet test multi-turn manipulation escalation or long-context attacks
+  (e.g. gradual boundary-pushing across several turns).
+- `encoding_obfuscation`'s Franco-Arabic (Arabizi) case is tagged
+  `language: ar` because the schema doesn't yet distinguish *script* from
+  *language* — the case is Arabic content written in Latin transliteration,
+  which the schema can't express precisely yet. Tracked for a schema update.
 
 ## Contributing
 
@@ -124,12 +153,14 @@ content — see [SECURITY.md](SECURITY.md) for the disclosure policy.
 
 ## Roadmap
 
-- [ ] Expand seed set to 300-500 reviewed cases across all 5 categories
+- [ ] Expand seed set to 300-500 reviewed cases across all 7 categories
 - [ ] Native-speaker review pass on all existing seed cases
+- [ ] Add a `script` field to the schema to properly tag Arabizi/transliterated cases
 - [ ] Add a model-backed baseline (2nd of 3)
 - [ ] Add a 3rd baseline
 - [ ] Publish first dataset release + results dashboard
 - [ ] CONTRIBUTING checklist enforced via PR template / CI
+- [ ] Multi-turn escalation category (v2, out of scope for the single-turn v1 dataset)
 
 ## License
 

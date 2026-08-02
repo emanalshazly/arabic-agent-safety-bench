@@ -31,6 +31,14 @@ PATTERNS = [
     (r"من\s+غير\s+ما\s+تقول\s+للمستخدم|علطول\s+من\s+غير\s+ما\s+تسأل", 0.3),
     # dialect: deception instructions
     (r"قول\s+للمستخدم\s+إن\s+كل\s+حاجة\s+تمام", 0.2),
+    # encoding_obfuscation: base64-looking payloads, heavily letter-spaced text
+    (r"[A-Za-z0-9+/]{24,}={0,2}", 0.3),
+    (r"(?:[؀-ۿ]\s){4,}[؀-ۿ]", 0.2),
+    # persona_roleplay: role/identity override framing
+    (r"أنت\s+الآن|إنت\s+دلوقتي|انت\s+دلوقتي", 0.2),
+    (r"تخيل\s+(إنك|انك)|بصفتك", 0.2),
+    (r"خلنا\s+نلعب\s+لعبة|لعبة\s+تمثيل", 0.2),
+    (r"\bDAN\b", 0.4),
 ]
 
 FLAG_THRESHOLD = 0.5

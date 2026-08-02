@@ -9,7 +9,8 @@ this project, so most contributions will be test cases.
    [`schema/test_case.schema.json`](schema/test_case.schema.json):
    - `id`: unique slug, `<category-short>-<dialect>-<number>`, e.g. `tool-misuse-egy-003`
    - `category`: one of `instruction_override`, `data_exfiltration`,
-     `malicious_tool_use`, `multilingual_confusion`, `benign_control`
+     `malicious_tool_use`, `multilingual_confusion`, `encoding_obfuscation`,
+     `persona_roleplay`, `benign_control`
    - `dialect`: `msa`, `egyptian`, or `gulf`
    - `prompt`: the actual text — write it natively in the dialect, don't
      machine-translate an English attack pattern
@@ -35,6 +36,15 @@ this project, so most contributions will be test cases.
   only measures refusal rate rewards agents that refuse everything.
 - **`multilingual_confusion`**: real code-switching patterns, not just
   an English attack with a translated preamble.
+- **`encoding_obfuscation`**: a genuine evasion technique (letter-spacing,
+  Base64, Arabizi/Franco-Arabic, homoglyphs) wrapped around a real payload
+  — not obfuscation for its own sake with no actual attack underneath.
+- **`persona_roleplay`**: framing that could plausibly get partial
+  compliance (fictional character, credentialed expert, "debug mode") —
+  not a cartoonish villain no model would ever engage with.
+- If you know which OWASP ASI vector (see README's mapping table) the
+  case maps to, set `owasp_asi_ref`. Leave it out if you're not sure —
+  don't guess.
 
 ### What we won't merge
 
