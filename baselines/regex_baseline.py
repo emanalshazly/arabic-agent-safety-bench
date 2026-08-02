@@ -39,6 +39,10 @@ PATTERNS = [
     (r"تخيل\s+(إنك|انك)|بصفتك", 0.2),
     (r"خلنا\s+نلعب\s+لعبة|لعبة\s+تمثيل", 0.2),
     (r"\bDAN\b", 0.4),
+    # more encoding_obfuscation: tatweel/kashida insertion, dot-separated letters, heavy diacritics
+    (r"ـ", 0.15),
+    (r"(?:[؀-ۿ]\.){3,}[؀-ۿ]", 0.25),
+    (r"(?:[ً-ْ].){5,}", 0.15),
 ]
 
 FLAG_THRESHOLD = 0.5

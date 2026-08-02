@@ -6,7 +6,7 @@ Arabic, Egyptian, and Gulf dialects — including benign-control cases that
 check for *over*-refusal, not just under-refusal.
 
 > **Status: early skeleton, not yet released.** The dataset currently has
-> 28 seed cases written by the project team and **not yet reviewed by a
+> 50 seed cases written by the project team and **not yet reviewed by a
 > native speaker** (see [Limitations](#limitations)). Nothing here should
 > be cited as a finished benchmark yet — track progress in
 > [Roadmap](#roadmap).
@@ -38,20 +38,20 @@ Expected output looks like:
 
 ```
 Baseline: regex
-Cases: 28
-Overall accuracy: 10/28 (35.7%)
+Cases: 50
+Overall accuracy: 16/50 (32.0%)
 
 category                  correct    total   accuracy
-benign_control                  6        6     100.0%
-data_exfiltration               0        4       0.0%
-encoding_obfuscation            0        3       0.0%
-instruction_override            2        4      50.0%
-malicious_tool_use              1        4      25.0%
-multilingual_confusion          0        4       0.0%
-persona_roleplay                1        3      33.3%
+benign_control                 10       10     100.0%
+data_exfiltration               0        7       0.0%
+encoding_obfuscation            0        6       0.0%
+instruction_override            2        7      28.6%
+malicious_tool_use              1        7      14.3%
+multilingual_confusion          0        7       0.0%
+persona_roleplay                3        6      50.0%
 ```
 
-That ~36% is expected — the shipped baseline is a naive keyword matcher,
+That ~32% is expected — the shipped baseline is a naive keyword matcher,
 not a real defense (see [Baselines](#baselines)). It exists as the floor
 any real model or classifier has to beat. `benign_control` at 100% just
 means the baseline doesn't over-flag *these particular* legitimate
@@ -130,32 +130,35 @@ python runner/cli.py --baseline regex --out results/regex_run.json
 
 ## Limitations
 
-- The dataset is a **28-case seed set**, not the 300–500 case v1 target.
+- The dataset is a **50-case seed set**, not the 300–500 case v1 target.
 - No case has been reviewed by a native speaker yet — every case's
   `reviewed_by` field is empty. Treat current cases as drafts.
-- Coverage per category is still 3-6 cases — far from statistically
+- Coverage per category is still 6-10 cases — far from statistically
   meaningful per-category or per-dialect comparison yet.
 - Only one (deliberately weak) baseline is implemented.
 - This bench measures single-turn prompt→response behavior only; it does
   not yet test multi-turn manipulation escalation or long-context attacks
   (e.g. gradual boundary-pushing across several turns).
-- `encoding_obfuscation`'s Franco-Arabic (Arabizi) case is tagged
-  `language: ar` because the schema doesn't yet distinguish *script* from
-  *language* — the case is Arabic content written in Latin transliteration,
-  which the schema can't express precisely yet. Tracked for a schema update.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) — adding test cases requires a
-native-speaker review before merge, and a source/license on every case.
-No leaked system prompts, no real secrets, no scraped copyrighted
-content — see [SECURITY.md](SECURITY.md) for the disclosure policy.
+**Looking for reviewers right now:** every case in `data/test_cases.jsonl`
+has `reviewed_by: ""` — if you're a native speaker of MSA, Egyptian, or
+Gulf Arabic, the highest-value contribution today is opening a PR that
+reviews a batch of existing cases (check for naturalness, correct
+dialect, and that the attack actually reads as a plausible thing someone
+would type) rather than adding new ones. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for the full process — adding test
+cases requires a native-speaker review before merge, and a source/license
+on every case. No leaked system prompts, no real secrets, no scraped
+copyrighted content — see [SECURITY.md](SECURITY.md) for the disclosure
+policy.
 
 ## Roadmap
 
 - [ ] Expand seed set to 300-500 reviewed cases across all 7 categories
 - [ ] Native-speaker review pass on all existing seed cases
-- [ ] Add a `script` field to the schema to properly tag Arabizi/transliterated cases
+- [x] Add a `script` field to the schema to properly tag Arabizi/transliterated cases
 - [ ] Add a model-backed baseline (2nd of 3)
 - [ ] Add a 3rd baseline
 - [ ] Publish first dataset release + results dashboard

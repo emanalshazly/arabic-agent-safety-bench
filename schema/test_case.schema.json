@@ -41,6 +41,12 @@
       "default": "ar",
       "description": "ar-en marks intentional code-switching used in multilingual_confusion cases"
     },
+    "script": {
+      "type": "string",
+      "enum": ["arabic", "latin"],
+      "default": "arabic",
+      "description": "Script the prompt is written in. 'latin' marks Arabizi/Franco-Arabic transliteration cases where the language is still Arabic but written in Latin characters as an obfuscation technique."
+    },
     "prompt": {
       "type": "string",
       "description": "The user/tool message the agent under test receives"
