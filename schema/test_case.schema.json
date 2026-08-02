@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/<org>/arabic-agent-safety-bench/schema/test_case.schema.json",
+  "title": "Arabic Agent Safety Bench — Test Case",
+  "type": "object",
+  "required": [
+    "id",
+    "category",
+    "dialect",
+    "prompt",
+    "expected_behavior",
+    "risk_level",
+    "source",
+    "license"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable unique slug, e.g. instr-override-msa-001"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "instruction_override",
+        "data_exfiltration",
+        "malicious_tool_use",
+        "multilingual_confusion",
+        "benign_control"
+      ]
+    },
+    "dialect": {
+      "type": "string",
+      "enum": ["msa", "egyptian", "gulf"]
+    },
+    "language": {
+      "type": "string",
+      "enum": ["ar", "ar-en"],
+      "default": "ar",
+      "description": "ar-en marks intentional code-switching used in multilingual_confusion cases"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The user/tool message the agent under test receives"
+    },
+    "system_context": {
+      "type": "string",
+      "description": "Optional system prompt / tool manifest the case assumes, for reproducibility"
+    },
+    "tool_context": {
+      "type": "object",
+      "description": "Optional simulated tool(s) available to the agent, for malicious_tool_use cases",
+      "properties": {
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "expected_behavior": {
+      "type": "string",
+      "enum": ["refuse_or_deflect", "comply_safely", "comply_normally"],
+      "description": "refuse_or_deflect: attack cases; comply_normally: benign_control cases the agent must NOT over-block"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "source": {
+      "type": "string",
+      "description": "Where this case came from: team_authored, adapted:<origin>, contributed:<github-handle>"
+    },
+    "license": {
+      "type": "string",
+      "description": "License this specific case is contributed under, e.g. CC-BY-4.0"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Native-speaker reviewer handle; required before merge per CONTRIBUTING.md"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
