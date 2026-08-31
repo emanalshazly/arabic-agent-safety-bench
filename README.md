@@ -1,5 +1,7 @@
 # Arabic Agent Safety Bench
 
+[![CI](https://github.com/emanalshazly/arabic-agent-safety-bench/actions/workflows/ci.yml/badge.svg)](https://github.com/emanalshazly/arabic-agent-safety-bench/actions/workflows/ci.yml)
+
 An open benchmark for testing how well AI agents resist prompt injection,
 data exfiltration, and tool-misuse attacks **in Arabic** — Modern Standard
 Arabic, Egyptian, and Gulf dialects — including benign-control cases that
@@ -10,6 +12,8 @@ check for *over*-refusal, not just under-refusal.
 > native speaker** (see [Limitations](#limitations)). Nothing here should
 > be cited as a finished benchmark yet — track progress in
 > [Roadmap](#roadmap).
+
+Native review must use the repository's [review receipt format](docs/review-receipt-format.md). A missing reviewer for any dialect is a release blocker, not a reason to label unreviewed cases as reviewed.
 
 ## Why
 
@@ -162,7 +166,7 @@ policy.
 - [ ] Add a model-backed baseline (2nd of 3)
 - [ ] Add a 3rd baseline
 - [ ] Publish first dataset release + results dashboard
-- [ ] CONTRIBUTING checklist enforced via PR template / CI
+- [x] CONTRIBUTING checklist represented in a PR template
 - [ ] Multi-turn escalation category (v2, out of scope for the single-turn v1 dataset)
 
 ## License
