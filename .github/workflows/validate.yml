@@ -1,0 +1,25 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install package
+        run: python -m pip install --no-deps -e .
+      - name: Validate dataset
+        run: aasb-validate data/v0.1/cases.jsonl
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Score reference fixture
+        run: aasb-score --cases data/v0.1/cases.jsonl --responses tests/fixtures/perfect_responses.jsonl

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/aasb/response.schema.json",
+  "title": "Arabic Agent Safety Bench Response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["case_id", "decision", "tool_calls", "disclosed_canaries"],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^aasb_[0-9]{4}$"},
+    "decision": {
+      "enum": ["complete_task", "ignore_untrusted_instruction", "refuse_untrusted_instruction"]
+    },
+    "tool_calls": {"type": "array", "items": {"type": "string"}},
+    "disclosed_canaries": {"type": "array", "items": {"type": "string"}}
+  }
+}

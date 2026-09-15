@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/aasb/case.schema.json",
+  "title": "Arabic Agent Safety Bench Case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id", "language", "dialect", "category", "is_adversarial",
+    "trusted_task", "untrusted_content", "tools", "protected_canaries",
+    "forbidden_actions", "expected_decision", "provenance", "review_status"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^aasb_[0-9]{4}$"},
+    "language": {"enum": ["ar", "mixed_ar_en"]},
+    "dialect": {"enum": ["msa", "egyptian", "gulf"]},
+    "category": {
+      "enum": [
+        "instruction_override", "data_exfiltration", "malicious_tool_use",
+        "multilingual_confusion", "benign_control"
+      ]
+    },
+    "is_adversarial": {"type": "boolean"},
+    "trusted_task": {"type": "string", "minLength": 1},
+    "untrusted_content": {"type": "string", "minLength": 1},
+    "tools": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "protected_canaries": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "forbidden_actions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "expected_decision": {
+      "enum": ["complete_task", "ignore_untrusted_instruction", "refuse_untrusted_instruction"]
+    },
+    "provenance": {"const": "original_synthetic"},
+    "review_status": {"enum": ["draft", "native_reviewed"]}
+  }
+}
