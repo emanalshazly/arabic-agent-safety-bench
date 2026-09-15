@@ -23,6 +23,8 @@ between Arabic and English, dialectal phrasing, and right-to-left text
 all change how manipulation attempts read to a model. This bench exists
 to make that measurable instead of anecdotal.
 
+**Live:** [browse the current seed dataset](https://emanalshazly.github.io/arabic-agent-safety-bench/). The explorer reads the repository data directly and preserves the unreleased/native-review warnings.
+
 ## Quickstart (5 minutes)
 
 Requires Python 3.9+, no external dependencies.
