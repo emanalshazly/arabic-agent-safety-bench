@@ -1,0 +1,45 @@
+name: Adapter compatibility report
+description: Report a reproducible model-runner compatibility result
+title: "[ADAPTER] "
+labels: ["adapter", "needs-triage"]
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: Provider or local server
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Exact model identifier or revision
+    validations:
+      required: true
+  - type: dropdown
+    id: adapter
+    attributes:
+      label: Adapter
+      options: [ollama, openai-compatible]
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Redacted command and environment
+      description: Remove API keys, tokens, private URLs, and personal paths.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Observable result
+      description: Include completion count and sanitized error text. Do not paste private model reasoning.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safe
+    attributes:
+      label: Redaction confirmation
+      options:
+        - label: I removed credentials, personal data, private prompts, and private endpoints.
+          required: true

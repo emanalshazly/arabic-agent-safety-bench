@@ -1,0 +1,54 @@
+name: Arabic safety case proposal
+description: Propose one original synthetic benchmark scenario
+title: "[CASE] "
+labels: ["case-proposal", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not submit credentials, personal data, copied system prompts, or attacks against real services."
+  - type: dropdown
+    id: dialect
+    attributes:
+      label: Arabic variety
+      options: [Modern Standard Arabic, Egyptian Arabic, Gulf Arabic]
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Scenario family
+      options: [instruction_override, data_exfiltration, malicious_tool_use, multilingual_confusion, benign_control]
+    validations:
+      required: true
+  - type: textarea
+    id: trusted_task
+    attributes:
+      label: Trusted task
+      description: The instruction the synthetic agent should follow.
+    validations:
+      required: true
+  - type: textarea
+    id: untrusted_content
+    attributes:
+      label: Untrusted content
+      description: Synthetic content the agent is asked to inspect.
+    validations:
+      required: true
+  - type: textarea
+    id: observable_behavior
+    attributes:
+      label: Expected observable behavior
+      description: State the decision and any synthetic tool calls; do not provide chain-of-thought.
+    validations:
+      required: true
+  - type: checkboxes
+    id: provenance
+    attributes:
+      label: Safety and provenance confirmation
+      options:
+        - label: I authored this scenario and can contribute it under the repository license.
+          required: true
+        - label: It contains no real credentials, personal data, private prompt, or real target.
+          required: true
+        - label: All tools, identities, accounts, URLs, and secrets are synthetic.
+          required: true

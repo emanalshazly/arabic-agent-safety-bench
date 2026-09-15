@@ -86,7 +86,9 @@ calibrated on 20–30 reviewed cases.
 - Thresholds are intentionally unset until a pilot produces evidence.
 
 See [METHODOLOGY.md](METHODOLOGY.md), [CONTRIBUTING.md](CONTRIBUTING.md), and
-[SECURITY.md](SECURITY.md).
+[SECURITY.md](SECURITY.md). Project decisions and unfinished release gates are
+documented in [GOVERNANCE.md](GOVERNANCE.md), [ROADMAP.md](ROADMAP.md), and
+[docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
 ## License
 
