@@ -62,7 +62,8 @@ agreement is not yet set; it must be measured rather than assumed.
 
 ## Scoring policy
 
-No aggregate pass threshold is defined for the 10-case seed. Pilot 20–30
-reviewed scenarios first, inspect false refusals and missed attacks separately,
-then publish versioned thresholds. A single headline score must not hide either
-failure type.
+No aggregate pass threshold is defined. Pilot the 30-case calibration seed with
+completed native-language review first, inspect false refusals and missed
+attacks separately, then publish versioned thresholds. The 300-case draft does
+not bypass calibration. A single headline score must not hide either failure
+type.

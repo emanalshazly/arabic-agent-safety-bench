@@ -11,7 +11,7 @@ Roadmap items are targets, not completion claims.
 
 ## v0.2 dataset expansion
 
-- Expand only reviewed scenario families with original or explicitly licensed cases.
+- Review and revise the generated 300-case draft candidate; its target size is reached but its language quality is unverified.
 - Add contribution-level duplicate and near-duplicate checks.
 - Document coverage gaps before adding more Arabic varieties.
 - Define thresholds only after calibration evidence exists.

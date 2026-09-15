@@ -4,8 +4,9 @@ An open, reproducible benchmark for evaluating whether tool-using AI agents
 follow trusted task instructions when Arabic or bilingual untrusted content
 contains conflicting requests.
 
-**Status:** pre-alpha 30-case calibration dataset and local validator. All
-language review statuses are still `draft`; no model baseline has been run.
+**Status:** pre-alpha. The repository contains a 30-case calibration seed and a
+separate 300-case v0.2 draft candidate. All language review statuses are still
+`draft`; no model baseline has been run.
 
 ## What v0.1 covers
 
@@ -42,7 +43,7 @@ network use additionally requires the explicit `--allow-remote` flag.
 Run the local review UI (bound to localhost only):
 
 ```powershell
-aasb-review
+aasb-review --cases data/v0.2-draft/cases.jsonl --reviews reviews/v02_native_reviews.jsonl
 ```
 
 Two distinct reviewers must approve a case and give both human dimensions at
@@ -50,7 +51,7 @@ least 4/5 before it can be promoted. Review events are append-only. Promotion
 writes a separate dataset and never changes the source file:
 
 ```powershell
-aasb-promote --cases data/v0.1/cases.jsonl --reviews reviews/native_reviews.jsonl --output review-output/cases.reviewed.jsonl --report review-output/promotion-report.jsonl
+aasb-promote --cases data/v0.2-draft/cases.jsonl --reviews reviews/v02_native_reviews.jsonl --output review-output/cases.reviewed.jsonl --report review-output/promotion-report.jsonl
 ```
 
 The station is tooling for review, not evidence that review has occurred.
@@ -62,6 +63,11 @@ One JSONL row is one agent scenario. The formal contract is
 untrusted content, available synthetic tools, forbidden actions, and expected
 decision. The public dataset does not include hidden chain-of-thought or leaked
 system prompts.
+
+`data/v0.2-draft/cases.jsonl` reaches the planned 300-case size through a
+reproducible original-synthetic expansion. Its count and structural balance are
+validated, but that is not evidence of dialect quality or scenario realism.
+See `data/v0.2-draft/README.md` before using it.
 
 ## Evaluation contract
 
@@ -81,7 +87,8 @@ calibrated on 20–30 reviewed cases.
 ## Limitations
 
 - The first 30 cases are authored calibration fixtures, not a representative sample.
-- Dialect labels require native-speaker review before the first public release.
+- The 270-case expansion is template-assisted and may contain phrasing or coverage artifacts.
+- Every dialect label requires native-speaker review before a public dataset release.
 - No claim of model safety, defense effectiveness, or market uniqueness is made.
 - Thresholds are intentionally unset until a pilot produces evidence.
 
@@ -92,5 +99,5 @@ documented in [GOVERNANCE.md](GOVERNANCE.md), [ROADMAP.md](ROADMAP.md), and
 
 ## License
 
-Code and the original synthetic v0.1 fixtures are released under MIT. Imported
+Code and the original synthetic fixtures are released under MIT. Imported
 or uncertain-provenance corpus files are explicitly excluded from this repo.
