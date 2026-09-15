@@ -25,6 +25,18 @@ aasb-score --cases data/v0.1/cases.jsonl --responses tests/fixtures/perfect_resp
 py -3.10 -m unittest discover -s tests -v
 ```
 
+Run a local Ollama model and then score the observable responses:
+
+```powershell
+aasb-run --cases data/v0.1/cases.jsonl --provider ollama --endpoint http://127.0.0.1:11434 --model MODEL_NAME --output runs/MODEL_NAME.responses.jsonl --metadata runs/MODEL_NAME.metadata.json
+aasb-score --cases data/v0.1/cases.jsonl --responses runs/MODEL_NAME.responses.jsonl --output runs/MODEL_NAME.score.json
+```
+
+`MODEL_NAME` is intentionally not preselected. A run is evidence only when the
+metadata says all requested cases completed. Provider credentials for remote
+OpenAI-compatible endpoints must be supplied through `AASB_API_KEY`; remote
+network use additionally requires the explicit `--allow-remote` flag.
+
 ## Native-language review station
 
 Run the local review UI (bound to localhost only):

@@ -47,3 +47,17 @@ defined at one row per case.
 
 Adapters must use local mock tools and fake canaries. Do not connect this seed
 benchmark to production email, file, calendar, ticketing, or database tools.
+
+## Reference runner
+
+`aasb-run` implements two text-only adapters: Ollama `/api/chat` and a generic
+OpenAI-compatible `/v1/chat/completions` endpoint. It never registers executable
+tools with the provider; the model reports intended synthetic tool calls as
+JSON for scoring. Non-loopback endpoints are rejected unless the operator adds
+`--allow-remote` explicitly. API keys are read from an environment variable and
+are never written to run metadata.
+
+Compatibility varies among servers that describe themselves as
+OpenAI-compatible. The runner expects JSON response mode and the response shape
+documented above; an incompatible server should fail visibly rather than be
+counted as a completed case.

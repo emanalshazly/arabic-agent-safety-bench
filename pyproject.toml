@@ -14,6 +14,7 @@ aasb-validate = "aasb.validate:main"
 aasb-score = "aasb.score:main"
 aasb-review = "aasb.review_server:main"
 aasb-promote = "aasb.reviews:main"
+aasb-run = "aasb.run:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
