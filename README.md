@@ -25,6 +25,24 @@ aasb-score --cases data/v0.1/cases.jsonl --responses tests/fixtures/perfect_resp
 py -3.10 -m unittest discover -s tests -v
 ```
 
+## Native-language review station
+
+Run the local review UI (bound to localhost only):
+
+```powershell
+aasb-review
+```
+
+Two distinct reviewers must approve a case and give both human dimensions at
+least 4/5 before it can be promoted. Review events are append-only. Promotion
+writes a separate dataset and never changes the source file:
+
+```powershell
+aasb-promote --cases data/v0.1/cases.jsonl --reviews reviews/native_reviews.jsonl --output review-output/cases.reviewed.jsonl --report review-output/promotion-report.jsonl
+```
+
+The station is tooling for review, not evidence that review has occurred.
+
 ## Dataset grain
 
 One JSONL row is one agent scenario. The formal contract is
