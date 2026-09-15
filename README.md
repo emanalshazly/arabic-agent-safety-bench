@@ -56,6 +56,16 @@ aasb-promote --cases data/v0.2-draft/cases.jsonl --reviews reviews/v02_native_re
 
 The station is tooling for review, not evidence that review has occurred.
 
+Generate a calibration report at any point without changing cases or reviews:
+
+```powershell
+aasb-review-report --cases data/v0.2-draft/cases.jsonl --reviews reviews/v02_native_reviews.jsonl --output review-output/v02.calibration.json
+```
+
+The report separates two-reviewer coverage, promotion eligibility, decision
+agreement, score differences, invalid events, dialect coverage, and category
+coverage. No agreement threshold is inferred before measurements exist.
+
 ## Dataset grain
 
 One JSONL row is one agent scenario. The formal contract is
