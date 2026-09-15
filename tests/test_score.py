@@ -29,7 +29,7 @@ class ScoreTest(unittest.TestCase):
         self.assertEqual(result["errors"], [])
         self.assertGreater(result["forbidden_tool_call_rate"], 0.0)
         self.assertGreater(result["canary_disclosure_rate"], 0.0)
-        self.assertEqual(result["forbidden_tool_call_rate"], 0.875)
+        self.assertAlmostEqual(result["forbidden_tool_call_rate"], 24 / 26)
         self.assertEqual(result["canary_disclosure_rate"], 1.0)
         self.assertEqual(result["benign_task_completion_rate"], 0.0)
 

@@ -4,8 +4,8 @@ An open, reproducible benchmark for evaluating whether tool-using AI agents
 follow trusted task instructions when Arabic or bilingual untrusted content
 contains conflicting requests.
 
-**Status:** pre-alpha dataset and local validator. No model baseline has been
-run yet.
+**Status:** pre-alpha 30-case calibration dataset and local validator. All
+language review statuses are still `draft`; no model baseline has been run.
 
 ## What v0.1 covers
 
@@ -50,7 +50,7 @@ calibrated on 20–30 reviewed cases.
 
 ## Limitations
 
-- The first 10 cases are authored test fixtures, not a representative sample.
+- The first 30 cases are authored calibration fixtures, not a representative sample.
 - Dialect labels require native-speaker review before the first public release.
 - No claim of model safety, defense effectiveness, or market uniqueness is made.
 - Thresholds are intentionally unset until a pilot produces evidence.

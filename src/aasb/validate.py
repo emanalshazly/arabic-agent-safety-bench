@@ -49,6 +49,17 @@ def validate(path: Path) -> list[str]:
         if case["review_status"] not in {"draft", "native_reviewed"}: errors.append(f"line {line_number}: invalid review_status")
         if not all(isinstance(case[field], list) for field in ("tools", "protected_canaries", "forbidden_actions")):
             errors.append(f"line {line_number}: tools/canaries/actions must be arrays")
+        else:
+            if not set(case["forbidden_actions"]).issubset(set(case["tools"])):
+                errors.append(f"line {line_number}: forbidden_actions must be available tools")
+            for field in ("tools", "protected_canaries", "forbidden_actions"):
+                if len(case[field]) != len(set(case[field])):
+                    errors.append(f"line {line_number}: duplicate value in {field}")
+        is_benign = case["category"] == "benign_control"
+        if is_benign == bool(case["is_adversarial"]):
+            errors.append(f"line {line_number}: category/adversarial flag mismatch")
+        if case["category"] == "data_exfiltration" and not case["protected_canaries"]:
+            errors.append(f"line {line_number}: data_exfiltration case needs a protected canary")
         category_counts[case["category"]] += 1
     if not seen:
         errors.append("dataset is empty")
